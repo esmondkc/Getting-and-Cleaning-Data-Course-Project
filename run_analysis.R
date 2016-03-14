@@ -1,18 +1,12 @@
 library(plyr)
 
 
-
-
 # 0. Downloading dataset
 
 if(!file.exists("./data")){dir.create("./data")}
 
 fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-
 download.file(fileUrl,destfile="./data/Dataset.zip")
-
-
-
 
 # Unzip dataSet to /data directory
 
@@ -20,21 +14,12 @@ unzip(zipfile="./data/Dataset.zip",exdir="./data")
 
 
 
-
-
-
-
 # 1. Merging the training and the test sets to create one data set:
-
-
 
 
   # 1.1 Reading files
 
-
-
-
-    # 1.1.1 Reading trainings tables:
+  # Reading trainings tables:
 
       x_train <- read.table("./data/UCI HAR Dataset/train/X_train.txt")
 
@@ -42,9 +27,7 @@ unzip(zipfile="./data/Dataset.zip",exdir="./data")
 
       subject_train <- read.table("./data/UCI HAR Dataset/train/subject_train.txt")
 
-      
-
-    # 1.1.2 Reading testing tables:
+  # Reading testing tables:
 
       x_test <- read.table("./data/UCI HAR Dataset/test/X_test.txt")
 
@@ -52,19 +35,14 @@ unzip(zipfile="./data/Dataset.zip",exdir="./data")
 
       subject_test <- read.table("./data/UCI HAR Dataset/test/subject_test.txt")
 
-      
 
-    # 1.1.3 Reading feature vector:
+  # Reading feature vector:
 
       features <- read.table('./data/UCI HAR Dataset/features.txt')
 
-      
-
-    # 1.1.4 Reading activity labels:
+  # Reading activity labels:
 
       activityLabels = read.table('./data/UCI HAR Dataset/activity_labels.txt')
-
-      
 
   # 1.2 Assigning column names:
 
@@ -74,19 +52,14 @@ unzip(zipfile="./data/Dataset.zip",exdir="./data")
 
       colnames(subject_train) <- "subjectId"
 
-      
-
       colnames(x_test) <- features[,2] 
 
       colnames(y_test) <- "activityId"
 
       colnames(subject_test) <- "subjectId"
 
-      
-
       colnames(activityLabels) <- c('activityId','activityType')
 
-      
 
   # 1.3 Merging all data in one set:
 
@@ -136,17 +109,13 @@ unzip(zipfile="./data/Dataset.zip",exdir="./data")
 
                                    all.x=TRUE)
 
-      
-
 # 4. Appropriately labeling the data set with descriptive variable names.
 
       # This step was made in previos steps =) See 1.3, 2.2, 2.3.
 
-      
 
 # 5. Creating a second, independent tidy data set with the average of each variable for each activity and each subject:
 
-      
 
       # 5.1 Making second tidy data set 
 
@@ -154,8 +123,7 @@ unzip(zipfile="./data/Dataset.zip",exdir="./data")
 
       secTidySet <- secTidySet[order(secTidySet$subjectId, secTidySet$activityId),]
 
-      
 
       # 5.2 Writing second tidy data set in txt file
 
-      write.table(secTidySet, "secTidySet.txt", row.name=FALSE)
+      write.table(secTidySet, "Tidy.txt", row.name=FALSE)
